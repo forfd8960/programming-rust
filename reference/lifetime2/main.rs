@@ -24,6 +24,11 @@ fn main() {
     println!("the yongest person: {:?}", p);
     assert_eq!(p.age, 16);
     assert_eq!(p.name, "bob".to_string());
+
+    let p1 = oldest_personal(&persons);
+    println!("the yongest person: {:?}", p1);
+    assert_eq!(p1.age, 22);
+    assert_eq!(p1.name, "alex".to_string());
 }
 
 fn yongest_personal<'a>(persons: &'a [&'a Person]) -> &'a Person {
@@ -39,4 +44,19 @@ fn yongest_personal<'a>(persons: &'a [&'a Person]) -> &'a Person {
     }
 
     return yonger;
+}
+
+fn oldest_personal<'a>(persons: &'a [&'a Person]) -> &'a Person {
+    let mut older = persons[0];
+    if persons.len() <= 1 {
+        return older;
+    }
+
+    for p in &persons[1..] {
+        if p.age > older.age {
+            older = *p;
+        }
+    }
+
+    return older;
 }

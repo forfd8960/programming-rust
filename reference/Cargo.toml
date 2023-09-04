@@ -15,3 +15,7 @@ path = "assignrefer/main.rs"
 [[bin]]
 name = "ltp"
 path = "lifetime/main.rs"
+
+[[bin]]
+name = "ltp2"
+path = "lifetime2/main.rs"

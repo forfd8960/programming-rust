@@ -11,3 +11,7 @@ edition = "2021"
 [[bin]]
 name = "assignrefer"
 path = "assignrefer/main.rs"
+
+[[bin]]
+name = "ltp"
+path = "lifetime/main.rs"

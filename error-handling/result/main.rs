@@ -28,14 +28,27 @@ impl WeatherReport {
 fn main() {
     let loc = "A";
     let weather_res = WeatherReport::new(loc);
-    handle_weather_res(weather_res);
+    let w0 = &weather_res;
+    assert_eq!(w0.is_ok(), true);
+    assert_eq!(w0.is_err(), false);
+
+    // Some(WeatherReport { condition: "sunny" })
+    println!("weather_res ok: {:?}", w0.as_ref().ok());
+
+    handle_weather_res(&weather_res);
 
     let loc1 = "B";
     let weather_res1: Result<WeatherReport, io::Error> = WeatherReport::new(loc1);
-    handle_weather_res(weather_res1);
+    let w1 = &weather_res1;
+    assert_eq!(w1.is_ok(), false);
+    assert_eq!(w1.is_err(), true);
+
+    // weather_res1 error: Some(Custom { kind: Other, error: "no weather found" })
+    println!("weather_res1 error: {:?}", w1.as_ref().err());
+    handle_weather_res(&weather_res1);
 }
 
-fn handle_weather_res(weather_res: Result<WeatherReport, io::Error>) {
+fn handle_weather_res(weather_res: &Result<WeatherReport, io::Error>) {
     match weather_res {
         Ok(w) => {
             println!("weather is: {:?}", w);

@@ -19,6 +19,9 @@ fn main() {
     println!("n: {:?}", ret_result(2));
     // thread 'main' panicked at ': Custom { kind: Other, error: "oh bad num" }', main.rs:20:39
     // println!("n: {:?}", ret_result(3).expect(""));
+
+    // thread 'main' panicked at 'assertion failed: 1 == 2', main.rs:23:5
+    // assert!(1 == 2);
 }
 
 fn div(total: i32, divider: i32) -> i32 {

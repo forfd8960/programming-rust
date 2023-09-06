@@ -11,3 +11,7 @@ edition = "2021"
 [[bin]]
 name = "result"
 path = "result/main.rs"
+
+[[bin]]
+name = "propagate"
+path = "propagate/main.rs"

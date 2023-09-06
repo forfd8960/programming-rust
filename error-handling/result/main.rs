@@ -1,4 +1,7 @@
+use core::result;
 use std::{collections::HashMap, io};
+
+type MyResult<T> = result::Result<T, io::Error>;
 
 #[derive(Debug)]
 struct WeatherReport {
@@ -43,9 +46,17 @@ fn main() {
     assert_eq!(w1.is_ok(), false);
     assert_eq!(w1.is_err(), true);
 
+    let res = error_result(true);
+    // res: None
+    println!("res: {:?}", res.as_ref().ok());
+    println!("res default: {:?}", res.unwrap_or(0));
+
     // weather_res1 error: Some(Custom { kind: Other, error: "no weather found" })
     println!("weather_res1 error: {:?}", w1.as_ref().err());
     handle_weather_res(&weather_res1);
+
+    let my_res = ret_myresult();
+    println!("my result: {:?}", my_res);
 }
 
 fn handle_weather_res(weather_res: &Result<WeatherReport, io::Error>) {
@@ -58,4 +69,16 @@ fn handle_weather_res(weather_res: &Result<WeatherReport, io::Error>) {
             println!("get weather error: {}", e);
         }
     }
+}
+
+fn error_result(ret_err: bool) -> Result<i32, String> {
+    if ret_err {
+        return Err("error result".to_string());
+    }
+
+    return Ok(1);
+}
+
+fn ret_myresult() -> MyResult<i32> {
+    Ok(10)
 }

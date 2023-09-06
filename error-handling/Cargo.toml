@@ -15,3 +15,7 @@ path = "result/main.rs"
 [[bin]]
 name = "propagate"
 path = "propagate/main.rs"
+
+[[bin]]
+name = "customerr"
+path = "custom-error/main.rs"

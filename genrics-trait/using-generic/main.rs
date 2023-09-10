@@ -1,3 +1,5 @@
+use std::fmt::Debug;
+use std::hash::Hash;
 use std::{fs::File, io::Write};
 
 fn main() -> std::io::Result<()> {
@@ -18,3 +20,6 @@ fn say_hello<W: Write>(out: &mut W) -> std::io::Result<()> {
     out.write_all(b"Hello")?;
     out.flush()
 }
+
+// type parameter
+fn top_ten<T: Debug + Hash + Eq>(values: &Vec<T>) {}

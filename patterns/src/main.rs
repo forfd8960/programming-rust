@@ -25,6 +25,10 @@ fn main() {
         lines: vec!["ABC".to_string()],
     };
     match_struct_ref_mut(&mut d);
+
+    match_range_and_multiple(
+        vec!['a', 'b', 'c', '0', '2', '8', 'D', 'G', '\n', '\t', '@'].as_slice(),
+    );
 }
 
 fn match_literal() {
@@ -99,4 +103,15 @@ fn match_struct_ref_mut(d: &mut MyData) {
 
 fn println_lines(lines: &Vec<String>) {
     println!("{:?}", lines);
+}
+
+fn match_range_and_multiple(chars: &[char]) {
+    for char in chars {
+        match char {
+            '0'..='9' => println!("matched number: {}", char),
+            'a'..='z' | 'A'..='Z' => println!("matched char: {}", char),
+            ' ' | '\n' | '\t' => println!("matched white space: {}", char),
+            _ => println!("matched other: {}", char),
+        }
+    }
 }

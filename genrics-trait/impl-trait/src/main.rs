@@ -64,11 +64,33 @@ impl<'a> StringSet<'a> for MySet<'a> {
     }
 }
 
+fn cyclical_zip(v1: Vec<String>, v2: Vec<String>) -> Box<dyn Iterator<Item = String>> {
+    Box::new(v1.into_iter().chain(v2).cycle())
+}
+
+fn cyclical_zip1(v1: Vec<String>, v2: Vec<String>) -> impl Iterator<Item = String> {
+    v1.into_iter().chain(v2).cycle()
+}
+
 fn main() {
+    println!("is emoji: {}", '$'.is_emoji()); // true
+
     let words = vec!["a", "B", "C"];
     let my_set = MySet::from_slice(words.as_slice());
     println!("{:?}", my_set);
     println!("B exist: {:?}", my_set.contains("B")); // true
 
-    println!("is emoji: {}", '$'.is_emoji()); // true
+    let v1 = vec!["abc".to_string(), "def".to_string()];
+    let v2 = vec!["abc".to_string(), "def".to_string()];
+    let mut cycle_vec = cyclical_zip(v1, v2);
+    println!("{:?}", cycle_vec.next());
+
+    let v3 = vec!["abc".to_string(), "def".to_string()];
+    let v4 = vec!["abc".to_string(), "def".to_string()];
+    let mut cycle_vec1 = cyclical_zip1(v3, v4);
+
+    // Some("abc")
+    // Some("def")
+    println!("{:?}", cycle_vec1.next());
+    println!("{:?}", cycle_vec1.next());
 }

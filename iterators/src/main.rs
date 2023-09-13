@@ -9,9 +9,7 @@
 //     type Item = i32;
 //     type IntoIter = std::vec::IntoIter<i32>;
 
-//     fn into_iter(self) -> Self::IntoIter {
-
-//     }
+//     fn into_iter(self) -> Self::IntoIter {}
 // }
 
 #[derive(Debug)]

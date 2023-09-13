@@ -6,3 +6,12 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+
+
+[[bin]]
+name = "fib"
+path = "fib/main.rs"
+
+[[bin]]
+name = "iter-adapater"
+path = "iterator-adapter/main.rs"

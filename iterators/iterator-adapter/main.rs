@@ -17,6 +17,7 @@ fn main() {
     enumerate();
     zip();
     build_words();
+    by_ref();
 }
 
 // Adapater Map
@@ -164,5 +165,34 @@ fn build_words() {
     let rhyme: Vec<_> = repeat("with").zip(en_wd).zip(cn_wd).collect();
     for wd in rhyme {
         println!("{:?}", wd);
+    }
+}
+
+// An iterator’s by_ref method borrows a mutable reference to the iterator
+// so that you can apply adapters to the reference.
+// When you’re done consuming items from these adapters,
+// you drop them, the borrow ends, and you regain access to your original iterator.
+fn by_ref() {
+    /*
+    Headers...
+    header: TO:Alice
+    header: From: Bob
+    Body...
+    Oooooh, a msg for u
+    */
+    let message = "TO:Alice\r\n\
+                        From: Bob\r\n\
+                        \r\n\
+                        Oooooh, a msg for u\r\n";
+    let mut lines = message.lines();
+
+    println!("Headers...");
+    for header in lines.by_ref().take_while(|line| !line.is_empty()) {
+        println!("header: {}", header);
+    }
+
+    println!("Body...");
+    for body in lines {
+        println!("{}", body);
     }
 }

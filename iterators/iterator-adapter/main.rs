@@ -18,6 +18,8 @@ fn main() {
     zip();
     build_words();
     by_ref();
+    clone();
+    cycle();
 }
 
 // Adapater Map
@@ -195,4 +197,21 @@ fn by_ref() {
     for body in lines {
         println!("{}", body);
     }
+}
+
+fn clone() {
+    let mut data = 1..3;
+    let mut cloned_data = data.clone();
+    println!("{:?}", data.next()); // 1
+    println!("{:?}", cloned_data.next()); // 1
+}
+
+// Repeats an iterator endlessly.
+fn cycle() {
+    let days = vec!["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
+    let mut days_repeate = days.iter().cycle();
+    for i in 1..10 {
+        print!("the {}'s day is: {:?} ", i, days_repeate.next());
+    }
+    println!();
 }

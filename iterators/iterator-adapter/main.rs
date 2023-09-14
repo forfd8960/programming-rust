@@ -7,6 +7,11 @@ fn main() {
     filter_map();
     flat_map();
     flatten();
+    take_while();
+    skip();
+    // peek();
+    rev();
+    chain();
 }
 
 // Adapater Map
@@ -65,4 +70,65 @@ fn flatten() {
         .flatten()
         .for_each(|x| print!(" {} ", x));
     println!();
+}
+
+fn take_while() {
+    println!("call take_while.......");
+    let words: Vec<&str> = "How to build a LSM Tree Based KeyValue Store, like (RocksDB, BadgerDB)"
+        .split(" ")
+        .collect();
+    // if take_while apply to a item returns false, then the iterator stops.
+    for word in words.iter().take_while(|w| w.len() <= 10) {
+        println!("{}", word);
+    }
+}
+
+fn skip() {
+    let data = vec![3, 2, 5, 6];
+    let skipped = data.iter().skip(2);
+    println!("skippped...");
+    for d in skipped {
+        println!("{:?}", d);
+    }
+
+    let data1 = vec![3, 2, 5, 6];
+    let skipped1 = data1.iter().skip_while(|x| **x % 2 != 0);
+    println!("skipped while...");
+    for d in skipped1 {
+        println!("{:?}", d);
+    }
+}
+
+fn peek() {
+    let mut tokens = "14654532472896435,5676954232543431223".chars().peekable();
+    // peek will not advance to next item
+    while let Some(tk) = tokens.peek() {
+        println!("{:?}", tk);
+        tokens.next();
+    }
+}
+
+fn rev() {
+    println!("call iterator rev...");
+    let words = vec!["你", "看", "看", "你"];
+    let rev_words = words.iter().rev();
+    for word in rev_words {
+        print!(" {} ", word);
+    }
+
+    println!();
+
+    let nums = vec![-1, 0, 10];
+    let rev_nums = nums.iter().rev();
+    for num in rev_nums {
+        print!(" {} ", num); // 10, 0, -1
+    }
+}
+
+fn chain() {
+    let v1 = vec!["A", "list", "of"];
+    let v2 = vec!["programming", "languages"];
+    let chainned: Vec<&&str> = v1.iter().chain(v2.iter()).collect();
+    //         ["A", "list", "of", "programming", "languages"]
+    println!("\n\t{:?}", chainned);
 }

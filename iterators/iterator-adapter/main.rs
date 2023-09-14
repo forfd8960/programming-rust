@@ -1,3 +1,5 @@
+use std::iter::repeat;
+use std::str;
 use std::{collections::HashMap, str::FromStr};
 
 fn main() {
@@ -12,6 +14,9 @@ fn main() {
     // peek();
     rev();
     chain();
+    enumerate();
+    zip();
+    build_words();
 }
 
 // Adapater Map
@@ -131,4 +136,33 @@ fn chain() {
     let chainned: Vec<&&str> = v1.iter().chain(v2.iter()).collect();
     //         ["A", "list", "of", "programming", "languages"]
     println!("\n\t{:?}", chainned);
+}
+
+fn enumerate() {
+    let vv = vec![0, 1, 2, 3];
+    for (idx, v) in vv.iter().enumerate() {
+        println!("idx: {}, val: {}", idx, v);
+    }
+}
+
+fn zip() {
+    let v1 = (1..5);
+    let v2 = (6..10);
+    let zip_v1_v2: Vec<_> = v1.zip(v2).collect();
+    // zip_v1_v2: [(1, 6), (2, 7), (3, 8), (4, 9)]
+    println!("zip_v1_v2: {:?}", zip_v1_v2);
+}
+
+/*
+(("with", "one"), "一")
+(("with", "two"), "二")
+(("with", "three"), "三")
+*/
+fn build_words() {
+    let cn_wd = vec!["一", "二", "三"];
+    let en_wd = vec!["one", "two", "three"];
+    let rhyme: Vec<_> = repeat("with").zip(en_wd).zip(cn_wd).collect();
+    for wd in rhyme {
+        println!("{:?}", wd);
+    }
 }

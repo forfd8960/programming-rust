@@ -1,10 +1,12 @@
-use std::str::FromStr;
+use std::{collections::HashMap, str::FromStr};
 
 fn main() {
     let text = " A Awesome\n day\n  beautiful sunny\n day\n".to_string();
     trim_strings(text);
     filter_element();
     filter_map();
+    flat_map();
+    flatten();
 }
 
 // Adapater Map
@@ -39,4 +41,28 @@ fn filter_map() {
     for d in data_filtered {
         println!("{}", d);
     }
+}
+
+fn flat_map() {
+    let mut city_meals: HashMap<&str, Vec<&str>> = HashMap::new();
+    city_meals.insert("Chengdu", vec!["Hotpot", "Sweetheart cake"]);
+    city_meals.insert(
+        "Beijing",
+        vec!["Kung Pao Chicken", "Brush meat in copper pot"],
+    );
+
+    let city = vec!["Beijing", "Chengdu"];
+    let meals = city.iter().flat_map(|city| &city_meals[city]);
+    for meal in meals {
+        println!("{}", meal);
+    }
+}
+
+fn flatten() {
+    let vectors_of_vector = vec![vec![1, 2, 3], vec![4, 5, 6]];
+    vectors_of_vector
+        .iter()
+        .flatten()
+        .for_each(|x| print!(" {} ", x));
+    println!();
 }

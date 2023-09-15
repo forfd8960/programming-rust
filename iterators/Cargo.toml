@@ -15,3 +15,8 @@ path = "fib/main.rs"
 [[bin]]
 name = "iter-adapater"
 path = "iterator-adapter/main.rs"
+
+
+[[bin]]
+name = "iter-consumer"
+path = "iterator-consume/main.rs"

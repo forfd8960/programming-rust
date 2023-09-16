@@ -42,6 +42,9 @@ fn main() {
 
     max_by_key();
     min_by_key();
+
+    iter_eq();
+    any_all();
 }
 
 fn sum(n: u32) -> u32 {
@@ -128,4 +131,56 @@ fn min_by_key() {
     // min by key: Some(MyData { name: "Tomato", price: 6 })
     let min = data_list.iter().min_by_key(|d| d.price);
     println!("min by key: {:?}", min);
+}
+
+/*
+Hello Good Morning is not equal to Hello
+         Good
+         Morning: true
+but they are equal to if skip whitespace: true
+*/
+fn iter_eq() {
+    let v1 = "Hello Good Morning";
+    let v2 = "Hello \n\t Good \n\t Morning";
+    println!("{} is not equal to {}: {}", v1, v2, v1 != v2);
+    println!(
+        "but they are equal to if skip whitespace: {}",
+        v1.split_whitespace().eq(v2.split_whitespace())
+    );
+}
+
+/*
+has word: true
+all_positive: true
+is_free: false
+*/
+fn any_all() {
+    let v = vec!["HI", "good", "day"];
+    let has_word = v.iter().any(|s| s.ends_with("d"));
+    println!("has word: {}", has_word);
+
+    let nums = vec![2, 7, 1024, 9, 808];
+    let all_positive = nums.iter().all(|num| i32::is_positive(*num));
+    println!("all_positive: {}", all_positive);
+
+    let data_list = vec![
+        MyData {
+            name: "Apple".to_string(),
+            price: 10,
+        },
+        MyData {
+            name: "Watermelon".to_string(),
+            price: 30,
+        },
+        MyData {
+            name: "Tomato".to_string(),
+            price: 6,
+        },
+        MyData {
+            name: "Disposable plastic bags".to_string(),
+            price: 0,
+        },
+    ];
+    let is_free = data_list.iter().all(|data| data.price <= 0);
+    println!("is_free: {}", is_free);
 }

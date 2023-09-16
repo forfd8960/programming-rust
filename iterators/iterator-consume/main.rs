@@ -45,6 +45,11 @@ fn main() {
 
     iter_eq();
     any_all();
+
+    position();
+
+    fold();
+    join_str();
 }
 
 fn sum(n: u32) -> u32 {
@@ -183,4 +188,36 @@ fn any_all() {
     ];
     let is_free = data_list.iter().all(|data| data.price <= 0);
     println!("is_free: {}", is_free);
+}
+
+fn position() {
+    let text = "Turn our golden faces into the sun";
+    let words = text.split(" ");
+
+    // Some(2)
+    println!("{:?}", words.into_iter().position(|w| w.eq("golden")));
+
+    let words1 = b"Hello, Friend";
+
+    // Some(2)
+    println!("{:?}", words1.into_iter().rposition(|&c| c == b'e'));
+}
+
+// How to calculate count, sum, product on the same iterator
+fn fold() {
+    let data = 1..10;
+    let data1 = data.clone();
+    let data2 = data.clone();
+
+    println!("{}", data.into_iter().fold(0, |n, _| n + 1)); // 10 count
+
+    println!("{}", data1.into_iter().fold(0, |n, i| n + i)); // 45 sum
+
+    println!("{}", data2.into_iter().fold(1, |n, i| n * i)); // 362880 product
+}
+
+fn join_str() {
+    let words = vec!["awesome", "rust", "iterator"];
+    let sentense = words.iter().fold(String::new(), |s, w| s + w + " ");
+    println!("{}", sentense);
 }

@@ -50,6 +50,8 @@ fn main() {
 
     fold();
     join_str();
+
+    nth();
 }
 
 fn sum(n: u32) -> u32 {
@@ -216,8 +218,33 @@ fn fold() {
     println!("{}", data2.into_iter().fold(1, |n, i| n * i)); // 362880 product
 }
 
+/*
+sentense: awesome rust iterator
+reversed sentense: iterator rust awesome
+*/
 fn join_str() {
     let words = vec!["awesome", "rust", "iterator"];
+    let words1 = words.clone();
+
     let sentense = words.iter().fold(String::new(), |s, w| s + w + " ");
-    println!("{}", sentense);
+    println!("sentense: {}", sentense);
+
+    let sentense = words1.iter().rfold(String::new(), |s, w| s + w + " ");
+    println!("reversed sentense: {}", sentense);
+}
+
+/*
+3rd: Some(5)
+3rd: Some(3)
+last in square: Some(81)
+*/
+fn nth() {
+    let v = vec![1, 3, 2, 5, 8];
+    let v1 = v.clone();
+    println!("3rd: {:?}", v.into_iter().nth(3));
+
+    println!("3rd: {:?}", v1.into_iter().nth_back(3));
+
+    let square = (1..10).map(|x| x * x);
+    println!("last in square: {:?}", square.into_iter().last());
 }

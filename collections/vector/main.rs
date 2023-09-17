@@ -4,6 +4,12 @@ fn main() {
     access_elements();
 
     vector_capacity();
+
+    join_vec();
+
+    split();
+
+    swap();
 }
 
 // [], ["rust", "vector"], [0, 255]
@@ -173,4 +179,97 @@ fn vector_capacity() {
     // after dedup: [72, 101, 108, 111, 44, 32, 71, 111, 100]
     println!("after dedup: {:?}", duplicated);
     assert_eq!(&duplicated, b"Helo, God");
+}
+
+fn join_vec() {
+    let v1 = vec![["a", "b"], ["c", "f"], ["D", "E"]];
+    // v1: [["a", "b"], ["c", "f"], ["D", "E"]], concat ["a", "b", "c", "f", "D", "E"]
+    println!("v1: {:?}, concat {:?}", v1, v1.concat());
+
+    let v2 = vec!["rust", "vector", "awesome"];
+    let join_str = v2.join("-");
+    // joined str: rust-vector-awesome
+    println!("joined str: {}", join_str);
+}
+
+/*
+[0, 2], [6, 8, 9]
+*/
+fn split() {
+    let nums = vec![0, 2, 6, 8, 9];
+    let mid = nums.len() / 2;
+
+    let left = &nums[..mid];
+    let right = &nums[mid..];
+    println!("left: {:?}, right: {:?}", left, right);
+
+    {
+        /*
+        splited_at: ([0], [2, 6, 8, 9])
+        */
+        let splited_at = nums.split_at(1);
+        println!("splited_at: {:?}", splited_at);
+    }
+
+    let splited_first = nums.split_first();
+    println!("splited_first: {:?}", splited_first);
+
+    {
+        if let Some(splited_last) = nums.split_last() {
+            println!("splited_first: {:?}", splited_last);
+            assert_eq!(splited_last.0, &9);
+            assert_eq!(splited_last.1, &[0, 2, 6, 8]);
+        };
+    }
+
+    {
+        let split_by_fn: Vec<_> = nums.split(|x| x % 3 == 0).collect();
+        println!("split_by_fn: {:?}", split_by_fn);
+    }
+
+    let words = vec![
+        "commitment",
+        ",",
+        "and",
+        "-",
+        "consistency",
+        "to",
+        "success",
+    ];
+    {
+        for group in words.splitn(2, |w| w.eq(&",")) {
+            println!("{group:?}");
+        }
+    }
+
+    let chunks = words.chunks(2);
+    for chunk in chunks {
+        println!("{chunk:?}");
+    }
+
+    let r_chunks = words.rchunks(2);
+    for chunk in r_chunks {
+        println!("{chunk:?}");
+    }
+
+    let windows = words.windows(2);
+    /*
+    ["commitment", ","]
+    [",", "and"]
+    ["and", "-"]
+    ["-", "consistency"]
+    ["consistency", "to"]
+    ["to", "success"]
+    */
+    for win in windows {
+        println!(" {win:?} ");
+    }
+}
+
+fn swap() {
+    let mut vv = vec![99, 88, 66, 33, 22, 11];
+    vv.swap(0, 5);
+
+    // swaped: [11, 88, 66, 33, 22, 99]
+    println!("swaped: {:?}", vv);
 }

@@ -10,6 +10,8 @@ fn main() {
     split();
 
     swap();
+
+    sort();
 }
 
 // [], ["rust", "vector"], [0, 255]
@@ -272,4 +274,35 @@ fn swap() {
 
     // swaped: [11, 88, 66, 33, 22, 99]
     println!("swaped: {:?}", vv);
+}
+
+#[derive(Debug, PartialEq, PartialOrd)]
+struct MyData {
+    name: String,
+    price: i32,
+}
+
+/*
+datalist after sort: [MyData { name: "daat1", price: 10 },
+MyData { name: "data3", price: 66 },
+MyData { name: "data2", price: 88 }]
+*/
+fn sort() {
+    let mut datalist = vec![
+        MyData {
+            name: "daat1".to_string(),
+            price: 10,
+        },
+        MyData {
+            name: "data2".to_string(),
+            price: 88,
+        },
+        MyData {
+            name: "data3".to_string(),
+            price: 66,
+        },
+    ];
+
+    datalist.sort_by(|a, b| a.price.cmp(&b.price));
+    println!("datalist after sort: {:?}", datalist);
 }

@@ -2,6 +2,8 @@ fn main() {
     create_vector();
 
     access_elements();
+
+    vector_capacity();
 }
 
 // [], ["rust", "vector"], [0, 255]
@@ -79,4 +81,83 @@ fn access_elements() {
     // clone whole slice, returning new vector.
     let nums_clone = nums.to_vec();
     println!("{:?}", nums_clone);
+}
+
+// capacity: 10, length: 0
+/*
+poped: 890
+vector: [123]
+vector after pop: [123]
+vector after insert at 0: [120, 123]
+vector after insert at 1: [120, 122, 123]
+vector after remove at 0: [122, 123, 256]
+*/
+fn vector_capacity() {
+    let mut v1: Vec<i32> = Vec::with_capacity(10); // Creates a new, empty vector with capacity n.
+    println!("capacity: {}, length: {}", v1.capacity(), v1.len());
+
+    v1.push(123);
+    v1.push(890);
+
+    // Removes and returns the last element
+    if let Some(v) = v1.pop() {
+        println!("poped: {}", v); // 890
+    }
+
+    // [123]
+    println!("vector after pop: {:?}", v1);
+
+    v1.insert(0, 120);
+    println!("vector after insert at 0: {:?}", v1); // [120, 123]
+    v1.insert(1, 122);
+    println!("vector after insert at 1: {:?}", v1); // [120, 122, 123]
+
+    v1.insert(3, 256);
+    // The longer the vector, the slower this operation gets
+    // Both .insert() and .remove() are slower the more elements have to be shifted.
+    v1.remove(0);
+    println!("vector after remove at 0: {:?}", v1); // [122, 123, 256]
+
+    v1.resize(20, 0);
+    // length: 20, cap: 20
+    println!("length: {}, cap: {}", v1.len(), v1.capacity());
+
+    v1.truncate(10);
+    println!(
+        "after truncate -- length: {}, cap: {}",
+        v1.len(),
+        v1.capacity()
+    );
+
+    // length: 13, cap: 20, elements: [122, 123, 256, 0, 0, 0, 0, 0, 0, 0, 456, 1000, 1024]
+    v1.extend_from_slice(vec![456, 1000, 1024].as_slice());
+    println!(
+        "length: {}, cap: {}, elements: {:?}",
+        v1.len(),
+        v1.capacity(),
+        v1,
+    );
+
+    let split_vec = v1.split_off(6);
+    /*
+    split_vec: [0, 0, 0, 0, 456, 1000, 1024]
+    origin_vec: [122, 123, 256, 0, 0, 0]
+    */
+    println!("split_vec: {:?}", split_vec);
+    println!("origin_vec: {:?}", v1);
+
+    let mut vec2 = vec![256, 1008];
+    v1.append(&mut vec2);
+    /*
+    vec2: []
+    , v1: [122, 123, 256, 0, 0, 0, 256, 1008]
+    */
+    println!("vec2: {:?}\n, v1: {:?}", vec2, v1);
+
+    // Removes the specified range from the vector in bulk, returning all removed elements as an iterator.
+    let drained: Vec<i32> = v1.drain(3..6).collect();
+    // drained: [0, 0, 0]
+    println!("drained: {:?}", drained);
+    // [122, 123, 256, 256, 1008]
+    println!("v1: {:?}", v1);
 }

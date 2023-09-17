@@ -160,4 +160,17 @@ fn vector_capacity() {
     println!("drained: {:?}", drained);
     // [122, 123, 256, 256, 1008]
     println!("v1: {:?}", v1);
+
+    v1.push(257);
+
+    // Removes all elements that don’t pass the given test.
+    let retain = v1.retain(|v| *v % 2 == 0);
+    // retain: (), v1: [122, 256, 256, 1008]
+    println!("retain: {:?}, v1: {:?}", retain, v1);
+
+    let mut duplicated = b"Helllllllllooooo, Goooooooooood".to_vec();
+    duplicated.dedup();
+    // after dedup: [72, 101, 108, 111, 44, 32, 71, 111, 100]
+    println!("after dedup: {:?}", duplicated);
+    assert_eq!(&duplicated, b"Helo, God");
 }

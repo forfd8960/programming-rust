@@ -11,3 +11,7 @@ edition = "2021"
 [[bin]]
 name = "vec_t"
 path = "vector/main.rs"
+
+[[bin]]
+name = "vecdeque"
+path = "vecdeque/main.rs"

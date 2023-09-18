@@ -12,6 +12,10 @@ fn main() {
     swap();
 
     sort();
+
+    sort_by();
+
+    position();
 }
 
 // [], ["rust", "vector"], [0, 255]
@@ -276,9 +280,9 @@ fn swap() {
     println!("swaped: {:?}", vv);
 }
 
-#[derive(Debug, PartialEq, PartialOrd)]
-struct MyData {
-    name: String,
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd)]
+struct MyData<'a> {
+    name: &'a String,
     price: i32,
 }
 
@@ -288,21 +292,76 @@ MyData { name: "data3", price: 66 },
 MyData { name: "data2", price: 88 }]
 */
 fn sort() {
+    let d1 = "data1".to_string();
+    let d2 = "data2".to_string();
+    let d3 = "data3".to_string();
     let mut datalist = vec![
         MyData {
-            name: "daat1".to_string(),
+            name: &d1,
             price: 10,
         },
         MyData {
-            name: "data2".to_string(),
+            name: &d2,
             price: 88,
         },
         MyData {
-            name: "data3".to_string(),
+            name: &d3,
             price: 66,
         },
     ];
 
     datalist.sort_by(|a, b| a.price.cmp(&b.price));
     println!("datalist after sort: {:?}", datalist);
+}
+
+fn sort_by() {
+    let d1 = "apple".to_string();
+    let d2 = "orange".to_string();
+    let d3 = "juice".to_string();
+    let mut datalist = vec![
+        MyData {
+            name: &d1,
+            price: 10,
+        },
+        MyData {
+            name: &d2,
+            price: 88,
+        },
+        MyData {
+            name: &d3,
+            price: 66,
+        },
+    ];
+
+    datalist.sort_by_key(|&d| d.name);
+    /*
+    datalist after sort: [MyData { name: "apple", price: 10 },
+    MyData { name: "juice", price: 66 },
+    MyData { name: "orange", price: 88 }]
+    */
+    println!("datalist after sort: {:?}", datalist);
+}
+
+fn position() {
+    let d1 = "apple".to_string();
+    let d2 = "orange".to_string();
+    let d3 = "juice".to_string();
+    let datalist = vec![
+        MyData {
+            name: &d1,
+            price: 10,
+        },
+        MyData {
+            name: &d2,
+            price: 88,
+        },
+        MyData {
+            name: &d3,
+            price: 66,
+        },
+    ];
+    let pos = datalist.iter().position(|d| d.price.eq(&88));
+
+    // rice: 88, position: Some(1)
+    println!("price: 88, position: {:?}", pos);
 }

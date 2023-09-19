@@ -19,3 +19,7 @@ path = "vecdeque/main.rs"
 [[bin]]
 name = "binaryheap"
 path = "binheap/main.rs"
+
+[[bin]]
+name = "hashmap"
+path = "hashmap/main.rs"

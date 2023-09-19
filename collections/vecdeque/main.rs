@@ -51,7 +51,7 @@ fn main() {
 fn create_vecdeque() {
     let deque = VecDeque::from(vec![1, 10, 6]);
     /*
-        Some(1)
+    Some(1)
     Some(6)
     false
         */

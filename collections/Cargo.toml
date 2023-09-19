@@ -15,3 +15,7 @@ path = "vector/main.rs"
 [[bin]]
 name = "vecdeque"
 path = "vecdeque/main.rs"
+
+[[bin]]
+name = "binaryheap"
+path = "binheap/main.rs"

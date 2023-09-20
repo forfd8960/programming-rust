@@ -23,3 +23,7 @@ path = "binheap/main.rs"
 [[bin]]
 name = "hashmap"
 path = "hashmap/main.rs"
+
+[[bin]]
+name = "hashset"
+path = "hashset/main.rs"

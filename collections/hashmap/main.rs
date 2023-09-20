@@ -1,9 +1,26 @@
 use std::collections::HashMap;
 
+#[derive(Debug)]
+struct Task {
+    name: String,
+    cost: i32,
+}
+
+impl Task {
+    fn new(name: String, cost: i32) -> Self {
+        Self {
+            name: name,
+            cost: cost,
+        }
+    }
+}
+
 fn main() {
     hashmap_op();
 
     words_count();
+
+    word_freq();
 }
 
 /*
@@ -18,7 +35,6 @@ get moive: Some(99)
 */
 fn hashmap_op() {
     let mut map1: HashMap<&str, i32> = HashMap::new();
-    let mut map2: HashMap<i32, i32> = HashMap::with_capacity(10);
 
     println!(
         "map1 len:{}, cap: {}, isEmpty: {}",
@@ -82,9 +98,27 @@ fn words_count() {
     To accomplish this, WebAssembly must be much more hardware-independent than a true assembly language.";
 
     for wd in words.split_whitespace() {
-        let count = words_map.entry(new_wd).or_insert(1);
+        let count = words_map.entry(wd).or_insert(0);
         *count += 1;
     }
 
     println!("words count: {:?}", words_map);
+}
+
+fn word_freq() {
+    let mut word_freq: HashMap<&str, i32> = HashMap::with_capacity(100);
+    let words = "WebAssembly is named to evoke the concept of assembly language, 
+    a term which dates to the 1950s. 
+    The name suggests bringing assembly-like programming to the Web, 
+    where it will be executed client-side — by the website-user's computer via the user's web browser. 
+    To accomplish this, WebAssembly must be much more hardware-independent than a true assembly language.";
+
+    for wd in words.split_whitespace() {
+        word_freq
+            .entry(wd)
+            .and_modify(|count| *count += 1)
+            .or_insert(1);
+    }
+
+    println!("word frequent: {:?}", word_freq);
 }

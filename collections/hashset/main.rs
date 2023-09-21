@@ -12,6 +12,10 @@ get Alice name: "Alice"
 take John out set: John
 set intersection: ["Alice"]
 set union: ["Alice", "Benjamin", "Xiaoming", "Alex", "Angela"]
+set differ: ["Angela"]
+dis joint: false
+is_subset: false
+is_superset: false
 */
 fn main() {
     let mut name_set = HashSet::with_capacity(10);
@@ -48,4 +52,12 @@ fn main() {
 
     let union = name_set.union(&name_set1);
     println!("set union: {:?}", union);
+
+    // name in name_set, but not in name_set1
+    let differ = name_set.difference(&name_set1);
+    println!("set differ: {:?}", differ);
+
+    println!("dis joint: {:?}", name_set.is_disjoint(&name_set1));
+    println!("is_subset: {:?}", name_set.is_subset(&name_set1));
+    println!("is_superset: {:?}", name_set.is_superset(&name_set1));
 }

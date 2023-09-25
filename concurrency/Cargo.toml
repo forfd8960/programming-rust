@@ -15,3 +15,13 @@ path = "rayon-tt/main.rs"
 [[bin]]
 name = "channel-test"
 path = "channel/main.rs"
+
+
+[[bin]]
+name = "shared-channel"
+path = "shared-channel/main.rs"
+
+
+[[bin]]
+name = "rwlock"
+path = "rwlock/main.rs"

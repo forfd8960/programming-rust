@@ -25,3 +25,7 @@ path = "shared-channel/main.rs"
 [[bin]]
 name = "rwlock"
 path = "rwlock/main.rs"
+
+[[bin]]
+name = "atomics"
+path = "atomics/main.rs"

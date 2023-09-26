@@ -26,22 +26,26 @@ impl AppConfig {
 
 fn main() {
     let config = Arc::new(RwLock::new(AppConfig::new(0)));
-    let conf1 = Arc::clone(&config);
 
     let mut handles: Vec<JoinHandle<_>> = vec![];
-    let handle1 = thread::spawn(move || {
-        let config = conf1.read().unwrap();
-        println!("read count: {:?}", *config);
-    });
-    handles.push(handle1);
 
     for idx in 0..10 {
-        println!("add 1 to config: {}", idx);
+        let conf1 = Arc::clone(&config);
+
+        let read_hdl = thread::spawn(move || {
+            println!("read count in: {}", idx);
+            let config = conf1.read().unwrap();
+            println!("read count: {}", config.read_count());
+        });
+
+        handles.push(read_hdl);
 
         let conf2 = Arc::clone(&config);
         let hdl = thread::spawn(move || {
+            println!("add 1 to config: {}", idx);
             let mut config = conf2.write().unwrap();
             config.incre_count(1);
+            println!("config count: {}", config.count);
         });
 
         handles.push(hdl);

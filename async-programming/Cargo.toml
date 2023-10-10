@@ -11,3 +11,7 @@ async-std = { version = "1.12.0", features = ["unstable"] }
 [[bin]]
 name = "async-block"
 path = "async-block/main.rs"
+
+[[bin]]
+name = "async-block1"
+path = "async-block1/main.rs"

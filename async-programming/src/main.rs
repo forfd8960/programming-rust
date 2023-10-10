@@ -1,5 +1,3 @@
-use core::result;
-
 use async_std::{
     io::{ReadExt, WriteExt},
     net, task,
@@ -32,6 +30,9 @@ fn main() {
         ("github.com".to_string(), 80, "/".to_string()),
         ("en.wikipedia.org".to_string(), 80, "/".to_string()),
     ];
+
+    // All this execution takes place on a single thread,
+    // the three calls to cheapo_request being interleaved with each other through successive polls of their futures
     let results = task::block_on(many_requests(requests));
     for result in results {
         match result {

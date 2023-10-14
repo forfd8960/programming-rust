@@ -1,9 +1,19 @@
-use async_chat::utils::{self, ChatResult};
-use async_std::prelude::*;
+use async_chat::utils::{self, ChatResult, FromServer};
 use async_std::{io, net};
+use async_std::{net::TcpStream, prelude::*, task};
 
-fn main() {
-    println!("client");
+fn main() -> ChatResult<()> {
+    let address = std::env::args().nth(1).expect("");
+    task::block_on(async {
+        let socket = TcpStream::connect(address).await?;
+        socket.set_nodelay(true)?;
+
+        let to_server = send_commands(socket.clone());
+        let from_server = handle_replies(socket);
+
+        from_server.race(to_server).await?;
+        Ok(())
+    })
 }
 
 async fn send_commands(mut server: net::TcpStream) -> ChatResult<()> {
@@ -19,5 +29,25 @@ async fn send_commands(mut server: net::TcpStream) -> ChatResult<()> {
         server.flush().await?;
     }
 
+    Ok(())
+}
+
+async fn handle_replies(from_server: net::TcpStream) -> ChatResult<()> {
+    let buffered = io::BufReader::new(from_server);
+    let mut reply_stream = utils::receive_as_json(buffered);
+
+    while let Some(reply) = reply_stream.next().await {
+        match reply? {
+            FromServer::Message {
+                group_name,
+                message,
+            } => {
+                println!("message posted to {}: {}", group_name, message);
+            }
+            FromServer::Error(msg) => {
+                println!("error from server: {:?}", msg);
+            }
+        }
+    }
     Ok(())
 }

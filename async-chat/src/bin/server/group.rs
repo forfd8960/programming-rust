@@ -1,6 +1,7 @@
+use async_chat::utils::FromServer;
 use async_std::task;
 use std::sync::Arc;
-use tokio::sync::broadcast;
+use tokio::sync::broadcast::{self, error::RecvError};
 
 use crate::connection::Outbound;
 
@@ -34,4 +35,20 @@ async fn handle_subscriber(
     mut receiver: broadcast::Receiver<Arc<String>>,
     outbound: Arc<Outbound>,
 ) {
+    loop {
+        let packet = match receiver.recv().await {
+            Ok(msg) => FromServer::Message {
+                group_name: group_name.clone(),
+                message: msg.clone(),
+            },
+            Err(RecvError::Lagged(n)) => {
+                FromServer::Error(format!("droped {} messages from: {}", n, group_name))
+            }
+            Err(RecvError::Closed) => break,
+        };
+
+        if outbound.send(packet).await.is_err() {
+            break;
+        }
+    }
 }

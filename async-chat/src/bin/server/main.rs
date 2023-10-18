@@ -10,8 +10,6 @@ mod group;
 mod group_table;
 
 fn main() -> ChatResult<()> {
-    println!("server");
-
     let address = std::env::args().nth(1).expect("usage: server address");
     let chant_group_table = Arc::new(group_table::GroupTable::new());
 
